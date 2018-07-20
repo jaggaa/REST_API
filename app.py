@@ -1,6 +1,7 @@
 #CRUD API's create, read, update,  delete
 # run from terminal only using "python coded\app.py" as the data.db file is in another folder as giver an error.
 
+import os              # for access to operatng system env variable
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
@@ -11,7 +12,7 @@ from resources.items import Item, ItemList
 from resources.store import Store, StoreList
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///data.db")       # for (heroku env variable, local run)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False    # configuration property
 app.secret_key =  "tejas"  # The secret key is used to encrypt the JWT. That is how we encrypt the user info into a secured token
 api = Api(app)
